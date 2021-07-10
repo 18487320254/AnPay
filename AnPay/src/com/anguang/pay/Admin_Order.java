@@ -31,7 +31,7 @@ public class Admin_Order extends HttpServlet {
 			String type=C_Filter_pay.get(request, "type");
 			if (type.equals("search")) {
 				String word=C_Filter_pay.get(request, "word");
-				String sql="SELECT * FROM paylist order by id desc";
+				String sql="SELECT * FROM paylist order by id desc limit 300";
 				if (!word.equals("all")) {
 					sql="SELECT * FROM paylist WHERE order_number LIKE '%"+word+"%' or pay_order_number LIKE '%"+word+"%' or state_pay LIKE '%"+word+"%' or state_call"
 						+ " LIKE '%"+word+"%' or project_id LIKE '%"+word+"%' or project_title LIKE '%"+word+"%' or money_remarks LIKE '%"+word+"%' or pay_type LIKE '%"+word+"%' or create_time LIKE '%"+word+"%' order by id desc";
