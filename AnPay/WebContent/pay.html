@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+<title>桉光科技在线收款！</title>
+<link rel="shortcut icon" href="Admin_System/img/logo.ico"/>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/pay_base.js"></script>
+<style>
+	.peopleTotal{
+		width: 2.2em;
+		height: 2.2em;
+		line-height: 2.2em;
+		border: #FFD700 solid 1px; 
+		border-radius: 5px;
+		margin: 0.5em;
+		display: inline-block;
+	}
+</style>
+</head>
+
+<body>
+	<div class="modal-body" style="text-align: center;">
+		<div class="form-group">
+		  <label for="usr">请输入付款金额:</label>
+		  <input type="number" class="form-control" id="money_total" style="font-size:2em;color: #007bff;height: 2.7em;border: 1px solid #007bff;" onkeyup="clearNoNum(this)" placeholder="￥00.00">
+		  <input type="text" class="form-control" id="money_remarks" style="font-size:1.2em;height: 2em;border: 1px solid #696969;margin-top: 1em;" placeholder="请输入付款说明/备注......">
+		</div>
+	</div>
+	<div class="modal-footer" style="text-align: center;">
+		<button onclick="GoPay()" type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">立即付款</button>
+	</div>
+
+	<!--loading-->
+	<div id="loading" style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color:rgba(0, 0, 0, 0.2);display: none;">
+		<div style="position: fixed;width: 6em;height: 6em;top: 0;left: 0;right: 0;bottom:0;margin: auto; background-color:rgba(0, 0, 0, 0.7);padding: 0.5em;border-radius: 10px;">
+			<img src="img/loading.gif" style="width: 100%;height: 100%;">
+		</div>
+	</div>
+<script>
+	window.onload=function(){
+		$('#money_total').focus().select();
+	}
+	var money_total=0.00;
+	var money_remarks='';
+
+	function An_alert(){
+		$("#alert_val").val("");
+		$('#alert').modal('toggle');
+	}
+//金额修正
+function clearNoNum(obj){  
+	obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符   
+	obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的   
+	obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");  
+	obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3');//只能输入两个小数   
+	if(obj.value.indexOf(".")< 0 && obj.value !=""){//以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额  
+		obj.value= parseFloat(obj.value);  
+	}  
+}
+	
+//支付结账
+function GoPay(){
+	$('#loading').css('display','block');
+	money_total=$("#money_total").val();
+	money_remarks=$("#money_remarks").val();
+	if (money_total.length<1) {
+		alert('请输入支付金额！');
+		$('#loading').css('display','none');
+	} else if(money_remarks.length<1) {
+		alert('请输入付款说明或备注！');
+		$('#loading').css('display','none');
+	} else {
+		var parpay='money_total='+money_total+'&money_remarks='+money_remarks;
+		An_go('AnguangPay?'+parpay);
+	}
+}
+function Last_Pay(rs){
+	$('#loading').css('display','none');
+	if (rs=='n_do') {
+		alert('支付异常，请前往店家前台结账！');
+	} else if(rs=='n_open_pay'){
+		alert('当前店家未开通在线结账，请前往前台结账！');
+	} else if(rs=='n_total'){
+		alert('前后台订单金额有差异，请前往前台核对结账！');
+	} else {
+		try {
+			var payinfo=rs.split("#Ancode#");
+			An_go('ancodepayindex.html?state=ancodepay&money_total='+money_total+'&order_number='+payinfo[0]+'&order_title='+payinfo[1]);
+		} catch (error) {
+			alert('支付异常，请前往店家前台结账！');
+		}
+	}
+}
+</script>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script src="http://supersystem.anguangkeji.com/js/getinfo.js"></script>
+</body>
+</html>

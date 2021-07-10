@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桉光科技 | 欢迎登录！</title>
+    <link rel="shortcut icon" href="img/logo.ico"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/base.js"></script>
+</head>
+<body>
+    <div class="card" style="width: 30em;margin: auto;border-radius: 10px;margin-top: 10%;">
+        <div class="card-header">桉光科技在线支付管理平台！</div>
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="账号/ID" id="id">
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" class="form-control" placeholder="密码/凭据" id="psd">
+            </div>
+            <button onclick="Login()" type="button" class="btn btn-danger btn-lg btn-block">一键登录</button>
+        </div> 
+    </div>
+    <div style="width: 100%;text-align: center;position: fixed;left: 0;bottom: 2em;">
+        <img style="width: 2em;height: 2em;margin-bottom: 0.5em;" src="../images/logo.png" alt=""><br>
+        <font style="font-size: 0.7em;">版权所有 @ 桉光科技</font>
+    </div>
+    <!--***********处理中**************-->
+    <div id="loading" style="width: 100%;height: 100%;position: fixed;left: 0;top: 0;background-color: rgba(0, 0, 0, 0.2);display: none;z-index: 999999;">
+        <img src="img/loading.gif" alt="" style="width: 5em;position: fixed;top: 0;bottom: 0;left: 0;right: 0;margin: auto;background-color: rgba(0, 0, 0, 0.6);border-radius: 15px;padding: 0.5em;">
+    </div>
+    <script>
+        function Login(){
+            var par='type=login&id='+$("#id").val()+'&psd='+$("#psd").val();
+            An_ajax(function(rs){
+                if (rs=='yes') {
+                    An_go('index.html');
+                } else {
+                    alert('登录失败！');
+                }
+            },"../Admin_Login",par,"post");
+        }
+    </script>
+</body>
+</html>
