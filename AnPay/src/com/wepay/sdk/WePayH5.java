@@ -48,7 +48,8 @@ public class WePayH5 extends HttpServlet {
 		        data.put("spbill_create_ip", B_Base_pay.getIP(request));
 		        data.put("notify_url", WepayConfig.notify_url);
 		        data.put("trade_type", "MWEB");  // 此处指定为H5支付
-		        data.put("scene_info", WepayConfig.scene_info);
+		        String scene_info="{\"h5_info\":{\"type\": \"Wap\",\"wap_url\": \""+b_pay_order.getReturn_url()+"\",\"wap_name\": \"订单支付\"}}";
+		        data.put("scene_info", scene_info);
 		        try {
 		            Map<String, String> resp = wxpay.unifiedOrder(data);
 		            System.out.println(resp);

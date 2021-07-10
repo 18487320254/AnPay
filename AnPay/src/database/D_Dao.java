@@ -312,13 +312,14 @@ public class D_Dao {
     
     public static B_Pay_Order GetPayOrderBean(String order_number) {
 		B_Pay_Order b_pay_order=new B_Pay_Order();
-		String sql="select order_number,money_total,money_remarks from paylist where order_number=?";
+		String sql="select order_number,money_total,return_url,money_remarks from paylist where order_number=?";
 		Connection conn=D_Base.Opendb();
 		ResultSet rs=Select(conn, sql, order_number);
 		try {
 			if (rs.next()) {
 				b_pay_order.setMoney_total(rs.getString("money_total"));
 				b_pay_order.setOrder_number(rs.getString("order_number"));
+				b_pay_order.setReturn_url(rs.getString("return_url"));
 				b_pay_order.setTitle(rs.getString("money_remarks"));
 				return b_pay_order;
 			}else {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-<title>桉光科技在线收款！</title>
+<title>AnPay | 桉光科技在线收款！</title>
 <link rel="shortcut icon" href="Admin_System/img/logo.ico"/>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/jquery-3.3.1.min.js"></script>
@@ -24,16 +24,31 @@
 </head>
 
 <body>
-	<div class="modal-body" style="text-align: center;">
-		<div class="form-group">
-		  <label for="usr">请输入付款金额:</label>
-		  <input type="number" class="form-control" id="money_total" style="font-size:2em;color: #007bff;height: 2.7em;border: 1px solid #007bff;" onkeyup="clearNoNum(this)" placeholder="￥00.00">
-		  <input type="text" class="form-control" id="money_remarks" style="font-size:1.2em;height: 2em;border: 1px solid #696969;margin-top: 1em;" placeholder="请输入付款说明/备注......">
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+        <a class="navbar-brand" href="#">AnPay | 桉光科技在线收单</a>   
+    </nav>
+	
+	
+    <div class="m-auto" style="max-width: 800px;margin-top: 1em !important;padding: 1em;border-radius: 10px;">
+		<div id="div_code" class="m-auto" style="max-width: 290px;float: left;padding: 3em;">
+			<img style="width: 100%;" src="img/anpay.png" alt="">
+		</div>
+		<div id="div_from" class="m-auto" style="max-width: 500px;float: left;">
+			<div class="modal-body" style="text-align: center;">
+				<div class="form-group">
+				  <label>请输入付款金额:</label>
+				  <input type="number" class="form-control" id="money_total" style="font-size:2em;color: #007bff;height: 2.7em;border: 1px solid #007bff;" onkeyup="clearNoNum(this)" placeholder="￥00.00">
+				  <input type="text" class="form-control" id="money_remarks" style="font-size:1.2em;height: 2em;border: 1px solid #696969;margin-top: 1em;" placeholder="请输入付款说明/备注......">
+				</div>
+				<p style="margin: 0;width: 100%;color: orange;">本支付服务即时到账，无法退款！</p>
+			</div>
+			<div class="modal-footer" style="text-align: center;">
+				<button onclick="GoPay()" type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">立即付款</button>
+			</div>
 		</div>
 	</div>
-	<div class="modal-footer" style="text-align: center;">
-		<button onclick="GoPay()" type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">立即付款</button>
-	</div>
+
+
 
 	<!--loading-->
 	<div id="loading" style="position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color:rgba(0, 0, 0, 0.2);display: none;">
@@ -42,7 +57,9 @@
 		</div>
 	</div>
 <script>
+	var isph=0;
 	window.onload=function(){
+		isMobile();
 		$('#money_total').focus().select();
 	}
 	var money_total=0.00;
@@ -96,8 +113,19 @@ function Last_Pay(rs){
 		}
 	}
 }
+/**
+ * 判断是不是移动端
+ * @returns {boolean}
+ */
+function isMobile() {
+    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+    var userAgentInfo = navigator.userAgent;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            $("#div_code").hide();
+        }
+    }
+}
 </script>
-<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
-<script src="http://supersystem.anguangkeji.com/js/getinfo.js"></script>
 </body>
 </html>

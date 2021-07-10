@@ -38,7 +38,7 @@ public class AlipayWEB extends HttpServlet {
 			AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.URL, AlipayConfig.APPID, AlipayConfig.RSA_PRIVATE_KEY, "json", AlipayConfig.CHARSET, AlipayConfig.ALIPAY_PUBLIC_KEY, AlipayConfig.SIGNTYPE);
 			//设置请求参数
 			AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
-			alipayRequest.setReturnUrl(AlipayConfig.return_url);
+			alipayRequest.setReturnUrl(b_pay_order.getReturn_url());
 			alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
 			//**********************************************************************
 			//商户订单号，商户网站订单系统中唯一订单号，必填
@@ -54,6 +54,7 @@ public class AlipayWEB extends HttpServlet {
 					+ "\"total_amount\":\""+ total_amount +"\"," 
 					+ "\"subject\":\""+ subject +"\"," 
 					+ "\"body\":\""+ body +"\"," 
+					+ "\"qr_pay_mode\":\"1\"," 
 					+ "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
 			
 			//若想给BizContent增加其他可选请求参数，以增加自定义超时时间参数timeout_express来举例说明

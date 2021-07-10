@@ -36,13 +36,16 @@ public class AncodePay extends HttpServlet {
 		String money_remarks=URLDecoder.decode(C_Filter_pay.get(request, "money_remarks"), "UTF-8") ;
 		String redirect_url=C_Filter_pay.get(request, "redirect_url");
 		String return_url=C_Filter_pay.get(request, "return_url");
+		if (return_url==null||return_url.length()<8||return_url.equals("null")) {
+			return_url="http://pay.anguangkeji.com/payend.html";
+		}
 		try {
 			//检查支付订单
 			String sql="select * from paylist where order_number=?";
 			if (D_Dao.NoExist(sql, order_number)) {
 				//创建支付记录
-				sql="insert into paylist(project_id,project_title,order_number,money_total,money_remarks,create_time,redirect_url,state_pay,state_call) values(?,?,?,?,?,?,?,?,?)";
-				String par=project_id+","+project_title+","+order_number+","+money_total+","+money_remarks+","+B_Base_pay.Time()+","+redirect_url+",n,n";
+				sql="insert into paylist(project_id,project_title,order_number,money_total,money_remarks,create_time,redirect_url,return_url,state_pay,state_call) values(?,?,?,?,?,?,?,?,?,?)";
+				String par=project_id+","+project_title+","+order_number+","+money_total+","+money_remarks+","+B_Base_pay.Time()+","+redirect_url+","+return_url+",n,n";
 				if (D_Dao.Up(sql, par)) {
 					//调起前段支付
 					String title=URLEncoder.encode(money_remarks, "UTF-8");

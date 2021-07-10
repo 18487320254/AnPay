@@ -65,7 +65,7 @@ public class AlipayH5 extends HttpServlet {
 		    // 设置异步通知地址
 		    alipay_request.setNotifyUrl(AlipayConfig.notify_url);
 		    // 设置同步地址
-		    alipay_request.setReturnUrl(AlipayConfig.return_url);   
+		    alipay_request.setReturnUrl(b_pay_order.getReturn_url());   
 		    
 		    // form表单生产
 		    String form = "";
