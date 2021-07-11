@@ -32,7 +32,7 @@ public class AnguangPay extends HttpServlet {
 		String money_total=C_Filter_pay.get(request, "money_total");
 		String money_remarks=URLEncoder.encode(C_Filter_pay.get(request, "money_remarks"), "UTF-8");
 		String redirect_url=URLEncoder.encode("http://pay.anguangkeji.com/AnNotify", "UTF-8");
-		String return_url=URLEncoder.encode("http://www.anguangkeji.com", "UTF-8");
+		String return_url=URLEncoder.encode("http://pay.anguangkeji.com/payend.html", "UTF-8");
 		String project_id="ANPAY";
 		String project_title=URLEncoder.encode("桉光科技在线收银", "UTF-8");
 		String order_number=project_id+B_Base_pay.Code(4)+B_time_pay.Timerm()+B_Base_pay.Code(4);
